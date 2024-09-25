@@ -1,5 +1,7 @@
 package com.example.saboresdecasa.models;
 
+import com.example.saboresdecasa.Enumerates.TamanyoTipoProducto;
+import com.example.saboresdecasa.Enumerates.TipoTipoProducto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,13 +20,15 @@ public class TipoProducto {
     private Integer id;
 
     @Column(name = "tipo", nullable = false)
-    private String tipo;
+    @Enumerated(EnumType.ORDINAL)
+    private TipoTipoProducto tipo;
 
     @Column(name = "precio", nullable = false)
     private Double precio;
 
     @Column(name = "tamanyo", nullable = false)
-    private String tamanyo;
+    @Enumerated(EnumType.ORDINAL)
+    private TamanyoTipoProducto tamanyo;
 
     @ManyToOne
     @JoinColumn(name = "id_producto")

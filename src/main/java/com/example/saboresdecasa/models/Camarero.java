@@ -28,7 +28,4 @@ public class Camarero {
 
     @Column(name = "email", nullable = false)
     private String email;
-
-
-
 }
