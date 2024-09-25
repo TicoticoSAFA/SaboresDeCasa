@@ -11,7 +11,7 @@ import java.util.Set;
 @Table(name="pedido", schema = "Sabores_de_casa", catalog = "postgres")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"mesa"})
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -28,7 +28,4 @@ public class Pedido {
     @ManyToOne
     @JoinColumn(name = "id_mesa")
     private Mesa mesa;
-
-
-    private Set<Cliente> clientes = new HashSet<>(0);
 }

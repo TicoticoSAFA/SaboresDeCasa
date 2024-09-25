@@ -3,11 +3,14 @@ package com.example.saboresdecasa.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name="mesa", schema = "Sabores_de_casa", catalog = "postgres")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"clientes", "camarero"})
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -24,4 +27,11 @@ public class Mesa {
     @ManyToOne
     @JoinColumn(name = "id_camarero")
     private Camarero camarero;
+
+    @ManyToMany
+    @JoinTable(name = "mesa_cliente",
+            joinColumns = {@JoinColumn(name = "id_mesa", nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "id_cliente", nullable = false)}
+    )
+    private Set<Cliente> clientes = new HashSet<>(0);
 }
