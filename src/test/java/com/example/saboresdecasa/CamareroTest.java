@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 public class CamareroTest {
 
@@ -13,8 +15,27 @@ public class CamareroTest {
     private CamareroService camareroService;
 
     @Test
+    void textTodosCamareros(){
+        List<Camarero> camareros = camareroService.getAll();
+        for (Camarero c : camareros){
+            System.out.println(c.toString());
+        }
+    }
+
+    @Test
+    void test1Camarero(){
+        System.out.println(camareroService.getById(5));
+    }
+
+    @Test
+    void textNombreCamarero(){
+        System.out.println(camareroService.getCamareroPorNombre("Juan"));
+    }
+
+    @Test
     void testCrearCamarero(){
         Camarero camarero = new Camarero();
+        camarero.setId(9);
         camarero.setNombre("Paco");
         camarero.setApellidos("Pérez Marquez");
         camarero.setDni("74185296D");
@@ -23,14 +44,20 @@ public class CamareroTest {
         System.out.println(camareroGuardado);
     }
 
+    @Test
     void testEditarCamarero(){
-        Camarero camarero = new Camarero();
+        Camarero camarero = camareroService.getById(9);
         camarero.setNombre("Paco");
         camarero.setApellidos("Pérez Marquez");
         camarero.setDni("74185296D");
         camarero.setEmail("pacoelwapo@gmail.com");
         Camarero camareroGuardado = camareroService.guardar(camarero);
-        System.out.println(camareroGuardado);
+        System.out.println(camareroGuardado.toString());
+    }
+
+    @Test
+    void testEliminar(){
+        camareroService.eliminar(9);
     }
 
 }

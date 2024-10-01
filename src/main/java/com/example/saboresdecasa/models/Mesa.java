@@ -28,8 +28,8 @@ public class Mesa {
     @JoinColumn(name = "id_camarero")
     private Camarero camarero;
 
-    @ManyToMany
-    @JoinTable(name = "mesa_cliente",
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "mesa_cliente", schema = "sabores_de_casa",
             joinColumns = {@JoinColumn(name = "id_mesa", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "id_cliente", nullable = false)}
     )

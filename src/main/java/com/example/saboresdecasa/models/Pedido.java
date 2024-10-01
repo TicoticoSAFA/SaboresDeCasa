@@ -22,6 +22,9 @@ public class Pedido {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "precio", nullable = false)
+    private Double precio;
+
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
