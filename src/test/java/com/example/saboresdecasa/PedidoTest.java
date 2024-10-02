@@ -28,17 +28,25 @@ public class PedidoTest {
 
     @Test
     void testFindById() {
-        Pedido pedido = pedidoService.getById(1);
+        Pedido pedido = pedidoService.getById(25);
         System.out.println(pedido.toString());
     }
 
     @Test
     void testSave() {
         Pedido pedido = new Pedido();
-        pedido.setId(3);
+        pedido.setId(9);
         pedido.setPrecio(100.0);
         pedido.setFecha(LocalDate.of(2021,5,14));
-        pedido.setMesa(mesaService.getbyId(1));
+        pedido.setMesa(mesaService.getbyId(14));
+        Pedido pedidoGuardado = pedidoService.guardar(pedido);
+        System.out.println(pedidoGuardado);
+    }
+
+    @Test
+    void testEdit() {
+        Pedido pedido = pedidoService.getById(25);
+        pedido.setPrecio(150.0);
         Pedido pedidoGuardado = pedidoService.guardar(pedido);
         System.out.println(pedidoGuardado);
     }

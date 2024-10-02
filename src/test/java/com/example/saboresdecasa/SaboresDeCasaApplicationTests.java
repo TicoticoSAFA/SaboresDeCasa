@@ -7,16 +7,16 @@ import com.example.saboresdecasa.servicios.CamareroService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @SpringBootTest
-@Service
-@AllArgsConstructor
 class SaboresDeCasaApplicationTests {
 
+    @Autowired
     private CamareroService camareroService;
 
     @Test

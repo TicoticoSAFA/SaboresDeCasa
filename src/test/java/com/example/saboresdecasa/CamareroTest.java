@@ -46,7 +46,7 @@ public class CamareroTest {
 
     @Test
     void testEditarCamarero(){
-        Camarero camarero = camareroService.getById(9);
+        Camarero camarero = camareroService.getById(16);
         camarero.setNombre("Paco");
         camarero.setApellidos("Pérez Marquez");
         camarero.setDni("74185296D");
