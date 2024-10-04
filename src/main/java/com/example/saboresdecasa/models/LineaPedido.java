@@ -20,15 +20,15 @@ public class LineaPedido {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_producto")
     private Producto producto;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_producto")
     private TipoProducto tipoProducto;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido")
     private Pedido pedido;
 }

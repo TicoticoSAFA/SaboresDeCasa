@@ -24,7 +24,7 @@ public class Mesa {
     @Column(name = "numero", nullable = false)
     private Integer numero;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_camarero")
     private Camarero camarero;
 

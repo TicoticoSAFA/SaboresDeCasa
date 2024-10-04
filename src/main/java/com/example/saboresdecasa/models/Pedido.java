@@ -28,7 +28,7 @@ public class Pedido {
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_mesa")
     private Mesa mesa;
 }
