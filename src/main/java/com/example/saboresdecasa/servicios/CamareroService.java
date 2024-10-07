@@ -63,17 +63,9 @@ public class CamareroService {
      */
     public String eliminar(Integer id) {
         Camarero camarero = camareroRepository.getById(id);
-        if (camarero != null){
-            return "no hay perfil";
-        }
         try {
             camareroRepository.deleteById(id);
-            camarero = camareroRepository.getById(id);
-            if (camarero != null){
-                return "no se ha podido eliminar el perfil";
-            }else {
-                return "perfil eliminado perfectamente";
-            }
+            return "se ha eliminado el pedido";
         }catch (Exception e){
             return "No se ha eliminado el perfil";
         }
