@@ -1,7 +1,7 @@
 package com.example.saboresdecasa.models;
 
-import com.example.saboresdecasa.Enumerates.TamanyoTipoProducto;
-import com.example.saboresdecasa.Enumerates.TipoTipoProducto;
+import com.example.saboresdecasa.enumerates.TamanyoTipoProducto;
+import com.example.saboresdecasa.enumerates.TipoTipoProducto;
 import jakarta.persistence.*;
 import lombok.*;
 
