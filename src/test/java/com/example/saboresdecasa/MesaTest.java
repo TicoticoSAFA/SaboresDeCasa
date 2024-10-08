@@ -1,5 +1,6 @@
 package com.example.saboresdecasa;
 
+import com.example.saboresdecasa.dto.MesaDTO;
 import com.example.saboresdecasa.models.Camarero;
 import com.example.saboresdecasa.models.Cliente;
 import com.example.saboresdecasa.models.Mesa;
@@ -26,8 +27,8 @@ public class MesaTest {
 
     @Test
     void testFindAll(){
-        List<Mesa> mesas = mesaService.getAll();
-        for (Mesa i : mesas){
+        List<MesaDTO> mesas = mesaService.getAll();
+        for (MesaDTO i : mesas){
             System.out.println(i.toString());
         }
     }
