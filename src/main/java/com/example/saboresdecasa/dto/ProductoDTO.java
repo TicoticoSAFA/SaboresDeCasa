@@ -1,6 +1,5 @@
 package com.example.saboresdecasa.dto;
 
-import com.example.saboresdecasa.models.Camarero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MesaDTO {
-        private Integer id;
-        private Integer numero;
-        private CamareroDTO camarero;
+public class ProductoDTO {
+    private Integer id;
+    private String nombre;
+    private String descripcion;
 }

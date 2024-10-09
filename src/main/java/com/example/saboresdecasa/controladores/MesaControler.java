@@ -26,9 +26,12 @@ public class MesaControler {
     }
 
     @PostMapping()
-    public MesaDTO save(@RequestBody Mesa mesa){
+    public Mesa save(@RequestBody MesaDTO mesa){
         return mesaService.guardar(mesa);
     }
 
-
+    @DeleteMapping()
+    public void delete(@RequestParam Integer id){
+        mesaService.eliminar(id);
+    }
 }

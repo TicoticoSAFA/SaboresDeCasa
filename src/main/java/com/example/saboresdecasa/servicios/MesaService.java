@@ -30,11 +30,11 @@ public class MesaService {
             MesaDTO dto = new MesaDTO();
             dto.setNumero(m.getNumero());
 
-            CamareroDTO camareroDTO = new CamareroDTO();
             Camarero camarero = m.getCamarero();
+            CamareroDTO camareroDTO = new CamareroDTO();
+            camareroDTO.setId(camarero.getId());
             camareroDTO.setNombre(camarero.getNombre());
-            camareroDTO.setApellidos(camarero.getApellidos());
-            camareroDTO.setMail(camarero.getEmail());
+
             dto.setCamarero(camareroDTO);
 
             mesaDTOList.add(dto);
@@ -58,6 +58,7 @@ public class MesaService {
 
         Camarero camarero = mesa.getCamarero();
         CamareroDTO camareroDTO = new CamareroDTO();
+        camareroDTO.setId(camarero.getId());
         camareroDTO.setNombre(camarero.getNombre());
         camareroDTO.setApellidos(camarero.getApellidos());
         camareroDTO.setMail(camarero.getEmail());
@@ -72,8 +73,13 @@ public class MesaService {
      * @param mesa
      * @return
      */
-    public Mesa guardar(Mesa mesa) {
-        return mesaRepository.save(mesa);
+    public Mesa guardar(MesaDTO mesa) {
+        Mesa m = new Mesa();
+        m.setNumero(mesa.getNumero());
+        Camarero camarero = camareroService.getById(mesa.getCamarero().getId());
+        m.setCamarero(camarero);
+        return mesaRepository.save(m);
+
     }
 
     /**
