@@ -12,4 +12,5 @@ public class CamareroDTO {
     private String nombre;
     private String apellidos;
     private String mail;
+    private String dni;
 }

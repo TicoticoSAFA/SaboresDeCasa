@@ -18,6 +18,23 @@ public class MesaService {
     private final CamareroService camareroService;
     private MesaRepository mesaRepository;
 
+
+    private static MesaDTO getMesaDTO(Mesa mesa) {
+        MesaDTO dto = new MesaDTO();
+        dto.setId(mesa.getId());
+        dto.setNumero(mesa.getNumero());
+
+        Camarero camarero = mesa.getCamarero();
+        CamareroDTO camareroDTO = new CamareroDTO();
+        camareroDTO.setId(camarero.getId());
+        camareroDTO.setNombre(camarero.getNombre());
+        camareroDTO.setApellidos(camarero.getApellidos());
+        camareroDTO.setMail(camarero.getEmail());
+        camareroDTO.setDni(camarero.getDni());
+        dto.setCamarero(camareroDTO);
+        return dto;
+    }
+
     /**
      * devuelve todas las mesas
      *
@@ -27,16 +44,7 @@ public class MesaService {
         List<Mesa> mesasList = mesaRepository.findAll();
         List<MesaDTO> mesaDTOList = new ArrayList<>();
         for (Mesa m : mesasList) {
-            MesaDTO dto = new MesaDTO();
-            dto.setNumero(m.getNumero());
-
-            Camarero camarero = m.getCamarero();
-            CamareroDTO camareroDTO = new CamareroDTO();
-            camareroDTO.setId(camarero.getId());
-            camareroDTO.setNombre(camarero.getNombre());
-
-            dto.setCamarero(camareroDTO);
-
+            MesaDTO dto = getMesaDTO(m);
             mesaDTOList.add(dto);
         }
         return mesaDTOList;
@@ -53,33 +61,31 @@ public class MesaService {
         if (mesa == null) {
             return null;
         }
-        MesaDTO dto = new MesaDTO();
-        dto.setNumero(mesa.getNumero());
-
-        Camarero camarero = mesa.getCamarero();
-        CamareroDTO camareroDTO = new CamareroDTO();
-        camareroDTO.setId(camarero.getId());
-        camareroDTO.setNombre(camarero.getNombre());
-        camareroDTO.setApellidos(camarero.getApellidos());
-        camareroDTO.setMail(camarero.getEmail());
-        dto.setCamarero(camareroDTO);
-
-        return dto;
+        return getMesaDTO(mesa);
     }
 
     /**
      * crea o modifica una mesa
      *
-     * @param mesa
+     * @param dto
      * @return
      */
-    public Mesa guardar(MesaDTO mesa) {
-        Mesa m = new Mesa();
-        m.setNumero(mesa.getNumero());
-        Camarero camarero = camareroService.getById(mesa.getCamarero().getId());
-        m.setCamarero(camarero);
-        return mesaRepository.save(m);
+    public Mesa guardar(MesaDTO dto) {
+        Mesa mesaEntity = new Mesa();
 
+        mesaEntity.setNumero(dto.getNumero());
+
+        Camarero camareroEntity = new Camarero();
+        CamareroDTO camareroDTO = dto.getCamarero();
+
+        camareroEntity.setId(camareroDTO.getId());
+        camareroEntity.setNombre(camareroDTO.getNombre());
+        camareroEntity.setApellidos(camareroDTO.getApellidos());
+        camareroEntity.setEmail(camareroDTO.getMail());
+        camareroEntity.setDni(camareroDTO.getDni());
+
+        mesaEntity.setCamarero(camareroEntity);
+        return mesaEntity;
     }
 
     /**
