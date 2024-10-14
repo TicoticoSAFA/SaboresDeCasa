@@ -2,6 +2,7 @@ package com.example.saboresdecasa.servicios;
 
 import com.example.saboresdecasa.dto.CamareroDTO;
 import com.example.saboresdecasa.dto.MesaDTO;
+import com.example.saboresdecasa.dto.MesaSaveDTO;
 import com.example.saboresdecasa.models.Camarero;
 import com.example.saboresdecasa.models.Mesa;
 import com.example.saboresdecasa.repositorios.MesaRepository;
@@ -21,16 +22,15 @@ public class MesaService {
 
     private static MesaDTO getMesaDTO(Mesa mesa) {
         MesaDTO dto = new MesaDTO();
-        dto.setId(mesa.getId());
         dto.setNumero(mesa.getNumero());
 
-        Camarero camarero = mesa.getCamarero();
         CamareroDTO camareroDTO = new CamareroDTO();
-        camareroDTO.setId(camarero.getId());
+        Camarero camarero = mesa.getCamarero();
         camareroDTO.setNombre(camarero.getNombre());
-        camareroDTO.setApellidos(camarero.getApellidos());
-        camareroDTO.setMail(camarero.getEmail());
         camareroDTO.setDni(camarero.getDni());
+        camareroDTO.setMail(camarero.getEmail());
+        camareroDTO.setApellidos(camarero.getApellidos());
+
         dto.setCamarero(camareroDTO);
         return dto;
     }
@@ -70,22 +70,23 @@ public class MesaService {
      * @param dto
      * @return
      */
-    public Mesa guardar(MesaDTO dto) {
-        Mesa mesaEntity = new Mesa();
+    public Mesa guardar(MesaSaveDTO dto, Integer idMesa, Integer idCamarero) {
+        Mesa mesa = mesaRepository.findById(idMesa).orElse(null);
+        if (mesa == null) {
+            mesa = new Mesa();
+        }
+        mesa.setNumero(dto.getNumero());
+        Camarero camarero = camareroService.getById(idCamarero);
+        mesa.setCamarero(camarero);
+        return mesaRepository.save(mesa);
+    }
 
-        mesaEntity.setNumero(dto.getNumero());
-
-        Camarero camareroEntity = new Camarero();
-        CamareroDTO camareroDTO = dto.getCamarero();
-
-        camareroEntity.setId(camareroDTO.getId());
-        camareroEntity.setNombre(camareroDTO.getNombre());
-        camareroEntity.setApellidos(camareroDTO.getApellidos());
-        camareroEntity.setEmail(camareroDTO.getMail());
-        camareroEntity.setDni(camareroDTO.getDni());
-
-        mesaEntity.setCamarero(camareroEntity);
-        return mesaEntity;
+    public Mesa guardar(MesaSaveDTO dto, Integer idCamarero) {
+        Mesa mesa = new Mesa();
+        mesa.setNumero(dto.getNumero());
+        Camarero camarero = camareroService.getById(idCamarero);
+        mesa.setCamarero(camarero);
+        return mesaRepository.save(mesa);
     }
 
     /**

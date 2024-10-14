@@ -27,11 +27,10 @@ public class CamareroControler {
 
         for (Camarero i : camareros){
             CamareroDTO camareroDTO = new CamareroDTO();
-            camareroDTO.setId(i.getId());
             camareroDTO.setNombre(i.getNombre());
             camareroDTO.setApellidos(i.getApellidos());
             camareroDTO.setMail(i.getEmail());
-            camareroDTOList.add(camareroDTO);
+            camareroDTO.setDni(i.getDni());
         }
 
         return camareroDTOList;

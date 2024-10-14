@@ -1,6 +1,7 @@
 package com.example.saboresdecasa.controladores;
 
 import com.example.saboresdecasa.dto.MesaDTO;
+import com.example.saboresdecasa.dto.MesaSaveDTO;
 import com.example.saboresdecasa.models.Mesa;
 import com.example.saboresdecasa.servicios.MesaService;
 import lombok.AllArgsConstructor;
@@ -25,9 +26,14 @@ public class MesaControler {
         return mesaService.getbyId(id);
     }
 
-    @PostMapping()
-    public Mesa save(@RequestBody MesaDTO mesa){
-        return mesaService.guardar(mesa);
+    @PostMapping("id/{idMesa}/{idCamarero}")
+    public Mesa save(@RequestBody MesaSaveDTO mesa, @PathVariable Integer idMesa, @PathVariable Integer idCamarero){
+        return mesaService.guardar(mesa, idMesa, idCamarero);
+    }
+
+    @PostMapping("id/{idCamarero}")
+    public Mesa save(@RequestBody MesaSaveDTO mesa, @PathVariable Integer idCamarero){
+        return mesaService.guardar(mesa, idCamarero);
     }
 
     @DeleteMapping()
