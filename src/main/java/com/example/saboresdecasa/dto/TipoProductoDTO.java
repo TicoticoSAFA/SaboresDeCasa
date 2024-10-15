@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TipoProductoDTO {
-    private Integer id;
     private TipoTipoProducto tipo;
     private Double precio;
     private TamanyoTipoProducto tamanyo;

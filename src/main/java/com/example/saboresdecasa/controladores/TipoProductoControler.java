@@ -25,9 +25,13 @@ public class TipoProductoControler {
         return tipoProductoService.getById(id);
     }
 
-    @PostMapping()
-    public TipoProducto save(@RequestBody TipoProductoDTO tipoProducto){
-        return tipoProductoService.guardar(tipoProducto);
+    @PostMapping("id/{idTipoProducto}/{idProducto}")
+    public TipoProducto save(@RequestBody TipoProductoDTO tipoProducto, @PathVariable Integer idTipoProducto, @PathVariable Integer idProducto){
+        return tipoProductoService.guardar(tipoProducto, idTipoProducto, idProducto);
+    }
+    @PostMapping("id/{idTipoProducto}")
+    public TipoProducto save(@RequestBody TipoProductoDTO tipoProducto, @PathVariable Integer idProducto){
+        return tipoProductoService.guardar(tipoProducto, idProducto);
     }
 
     @DeleteMapping()

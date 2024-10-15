@@ -28,11 +28,9 @@ public class TipoProductoService {
         List<TipoProductoDTO> tipoProductoDTOList = new ArrayList<>();
         for (TipoProducto tipoProducto : tipoProductos) {
             TipoProductoDTO tipoProductoDTO = new TipoProductoDTO();
-            tipoProductoDTO.setId(tipoProducto.getId());
 
             Producto producto = tipoProducto.getProducto();
             ProductoDTO productoDTO = new ProductoDTO();
-            productoDTO.setId(producto.getId());
             productoDTO.setNombre(producto.getNombre());
             productoDTO.setDescripcion(producto.getDescripcion());
 
@@ -41,7 +39,6 @@ public class TipoProductoService {
             tipoProductoDTO.setTipo(tipoProducto.getTipo());
             tipoProductoDTO.setTamanyo(tipoProducto.getTamanyo());
             tipoProductoDTO.setPrecio(tipoProducto.getPrecio());
-            tipoProductoDTO.setId(tipoProducto.getId());
             tipoProductoDTOList.add(tipoProductoDTO);
         }
         return tipoProductoDTOList;
@@ -60,14 +57,12 @@ public class TipoProductoService {
             return null;
         }
 
-        tipoProductoDTO.setId(tipoProducto.getId());
         tipoProductoDTO.setPrecio(tipoProducto.getPrecio());
         tipoProductoDTO.setTamanyo(tipoProducto.getTamanyo());
         tipoProductoDTO.setTipo(tipoProducto.getTipo());
 
         ProductoDTO productoDTO = new ProductoDTO();
         Producto producto = tipoProducto.getProducto();
-        productoDTO.setId(producto.getId());
         productoDTO.setNombre(producto.getNombre());
         productoDTO.setDescripcion(producto.getDescripcion());
 
@@ -81,16 +76,26 @@ public class TipoProductoService {
      * @param dto
      * @return
      */
-    public TipoProducto guardar(TipoProductoDTO dto){
-        TipoProducto entity = new TipoProducto();
-        if (dto.getId() != null) {
-            entity = tipoProductoRepository.findById(dto.getId()).orElse(null);
-        }
+    public TipoProducto guardar(TipoProductoDTO dto, Integer idProducto, Integer idTipoProducto){
+        TipoProducto entity = tipoProductoRepository.findById(idTipoProducto).orElse(null);
+
         entity.setPrecio(dto.getPrecio());
         entity.setTamanyo(dto.getTamanyo());
         entity.setTipo(dto.getTipo());
 
-        Producto producto = productoService.getById(dto.getProducto().getId());
+        Producto producto = productoService.getById(idProducto);
+        entity.setProducto(producto);
+
+        return tipoProductoRepository.save(entity);
+    }
+
+    public TipoProducto guardar(TipoProductoDTO dto, Integer idProducto){
+        TipoProducto entity = new TipoProducto();
+        entity.setPrecio(dto.getPrecio());
+        entity.setTamanyo(dto.getTamanyo());
+        entity.setTipo(dto.getTipo());
+
+        Producto producto = productoService.getById(idProducto);
         entity.setProducto(producto);
 
         return tipoProductoRepository.save(entity);
