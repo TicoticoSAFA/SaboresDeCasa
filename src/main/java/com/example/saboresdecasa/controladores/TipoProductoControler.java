@@ -15,13 +15,14 @@ public class TipoProductoControler {
 
     private TipoProductoService tipoProductoService;
 
-    @GetMapping("/listar")
+    // GetMapping para listar todos los tipos de productos
+    @GetMapping("/carta")
     public List<TipoProductoDTO> getAllTipoProducto(){
         return tipoProductoService.getAll();
     }
 
     @GetMapping()
-    public TipoProductoDTO getByIdTipoProducto(@RequestParam  Integer id){
+    public TipoProducto getByIdTipoProducto(@RequestParam  Integer id){
         return tipoProductoService.getById(id);
     }
 

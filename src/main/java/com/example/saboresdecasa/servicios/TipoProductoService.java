@@ -49,26 +49,28 @@ public class TipoProductoService {
      * @param id
      * @return
      */
-    public TipoProductoDTO getById(Integer id){
-        TipoProductoDTO tipoProductoDTO = new TipoProductoDTO();
-        TipoProducto tipoProducto = tipoProductoRepository.findById(id).orElse(null);
+    public TipoProducto getById(Integer id){
+        return tipoProductoRepository.findById(id).orElse(null);
 
-        if (tipoProducto == null) {
-            return null;
-        }
-
-        tipoProductoDTO.setPrecio(tipoProducto.getPrecio());
-        tipoProductoDTO.setTamanyo(tipoProducto.getTamanyo());
-        tipoProductoDTO.setTipo(tipoProducto.getTipo());
-
-        ProductoDTO productoDTO = new ProductoDTO();
-        Producto producto = tipoProducto.getProducto();
-        productoDTO.setNombre(producto.getNombre());
-        productoDTO.setDescripcion(producto.getDescripcion());
-
-        tipoProductoDTO.setProducto(productoDTO);
-
-        return tipoProductoDTO;
+//        TipoProductoDTO tipoProductoDTO = new TipoProductoDTO();
+//        TipoProducto tipoProducto = tipoProductoRepository.findById(id).orElse(null);
+//
+//        if (tipoProducto == null) {
+//            return null;
+//        }
+//
+//        tipoProductoDTO.setPrecio(tipoProducto.getPrecio());
+//        tipoProductoDTO.setTamanyo(tipoProducto.getTamanyo());
+//        tipoProductoDTO.setTipo(tipoProducto.getTipo());
+//
+//        ProductoDTO productoDTO = new ProductoDTO();
+//        Producto producto = tipoProducto.getProducto();
+//        productoDTO.setNombre(producto.getNombre());
+//        productoDTO.setDescripcion(producto.getDescripcion());
+//
+//        tipoProductoDTO.setProducto(productoDTO);
+//
+//        return tipoProductoDTO;
     }
 
     /**
@@ -94,6 +96,7 @@ public class TipoProductoService {
         entity.setPrecio(dto.getPrecio());
         entity.setTamanyo(dto.getTamanyo());
         entity.setTipo(dto.getTipo());
+
 
         Producto producto = productoService.getById(idProducto);
         entity.setProducto(producto);
