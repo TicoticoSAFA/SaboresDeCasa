@@ -3,8 +3,10 @@ package com.example.saboresdecasa.servicios;
 import com.example.saboresdecasa.dto.*;
 import com.example.saboresdecasa.models.LineaPedido;
 import com.example.saboresdecasa.models.Pedido;
+import com.example.saboresdecasa.models.Producto;
 import com.example.saboresdecasa.models.TipoProducto;
 import com.example.saboresdecasa.repositorios.LineaPedidoRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,18 +44,10 @@ public class LineaPedidoService {
             LineaPedidoDTO lineaPedidoDTO = new LineaPedidoDTO();
             lineaPedidoDTO.setCantidad(lineaPedido.getCantidad());
 
-            ProductoDTO productoDTO = new ProductoDTO();
-            productoDTO.setNombre(lineaPedido.getProducto().getNombre());
-            productoDTO.setDescripcion(lineaPedido.getProducto().getDescripcion());
-            lineaPedidoDTO.setProducto(productoDTO);
-
-            lineaPedidoDTO.setProducto(productoDTO);
-
             TipoProductoDTO tipoProductoDTO = new TipoProductoDTO();
             tipoProductoDTO.setTipo(lineaPedido.getTipoProducto().getTipo());
             tipoProductoDTO.setTamanyo(lineaPedido.getTipoProducto().getTamanyo());
             tipoProductoDTO.setPrecio(lineaPedido.getTipoProducto().getPrecio());
-            tipoProductoDTO.setProducto(productoDTO);
             lineaPedidoDTO.setTipoProducto(tipoProductoDTO);
 
             PedidoDTO pedidoDTO = new PedidoDTO();
@@ -85,21 +79,26 @@ public class LineaPedidoService {
      * @param idTipoProducto
      * @return
      */
-    public LineaPedido guardar(LineaPedidoGuardarDTO dto, Integer idPedido, Integer idTipoProducto) {
-        LineaPedido lineaPedido = new LineaPedido();
+//    @Transactional
+//    public LineaPedido guardar(LineaPedidoGuardarDTO dto, Integer idPedido, Integer idTipoProducto) {
+//        LineaPedido lineaPedido = new LineaPedido();
+//
+//        lineaPedido.setCantidad(dto.getCantidad());
+//
+//        Pedido pedido = pedidoService.getById(idPedido);
+//        TipoProducto tipoProducto = tipoProductoService.getById(idTipoProducto);
+//
+//        Double total = dto.getCantidad() * tipoProducto.getPrecio();
+//
+//        pedido.setPrecio(pedido.getPrecio() + total);
+//
+//        lineaPedido.setPedido(pedidoService.guardar(pedido));
+//        lineaPedido.setTipoProducto(tipoProducto);
+//
+//        return lineaPedidoRepository.save(lineaPedido);
+//    }
 
-        lineaPedido.setCantidad(dto.getCantidad());
-
-        Pedido pedido = pedidoService.getById(idPedido);
-        TipoProducto tipoProducto = tipoProductoService.getById(idTipoProducto);
-
-        Double total = dto.getCantidad() * tipoProducto.getPrecio();
-
-        pedido.setPrecio(pedido.getPrecio() + total);
-
-        lineaPedido.setPedido(pedidoService.guardar(pedido));
-        lineaPedido.setTipoProducto(tipoProducto);
-
+    public LineaPedido guardar(LineaPedido lineaPedido) {
         return lineaPedidoRepository.save(lineaPedido);
     }
 }

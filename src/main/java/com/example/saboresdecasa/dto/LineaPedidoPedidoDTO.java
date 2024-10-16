@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LineaPedidoDTO {
+public class LineaPedidoPedidoDTO {
+    private Integer id;
     private Integer cantidad;
-    private TipoProductoDTO tipoProducto;
-    private PedidoDTO pedido;
+    private Integer idTipoProducto;
 }

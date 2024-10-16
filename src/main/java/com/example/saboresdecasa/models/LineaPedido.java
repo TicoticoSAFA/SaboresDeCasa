@@ -7,7 +7,7 @@ import lombok.*;
 @Table(name="linea_pedido", schema = "sabores_de_casa", catalog = "postgres")
 @Getter
 @Setter
-@ToString(exclude = {"producto", "tipoProducto", "pedido"})
+@ToString(exclude = {"tipoProducto", "pedido"})
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -19,10 +19,6 @@ public class LineaPedido {
 
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
-
-    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_producto")
-    private Producto producto;
 
     @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_producto")

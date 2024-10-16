@@ -21,8 +21,8 @@ public class LineaPedidoControler {
         return lineaPedidoService.getAll();
     }
 
-    @PostMapping("id/{idPedido}/{idTipoProducto}/{idProducto}")
-    public LineaPedido save(@RequestBody LineaPedidoGuardarDTO lineaPedido, @PathVariable Integer idTipoProducto, @PathVariable Integer idPedido) {
-        return lineaPedidoService.guardar(lineaPedido, idTipoProducto, idPedido);
-    }
+//    @PostMapping("id/{idPedido}/{idTipoProducto}")
+//    public LineaPedido save(@RequestBody LineaPedidoGuardarDTO lineaPedido, @PathVariable Integer idTipoProducto, @PathVariable Integer idPedido) {
+//        return lineaPedidoService.guardar(lineaPedido, idTipoProducto, idPedido);
+//    }
 }

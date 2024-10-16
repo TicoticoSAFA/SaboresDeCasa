@@ -64,6 +64,10 @@ public class MesaService {
         return getMesaDTO(mesa);
     }
 
+    public Mesa getById(Integer id){
+        return mesaRepository.findById(id).orElse(null);
+    }
+
     /**
      * crea o modifica una mesa
      *

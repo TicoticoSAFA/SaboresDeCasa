@@ -30,7 +30,7 @@ public class TipoProducto {
     @Enumerated(EnumType.ORDINAL)
     private TamanyoTipoProducto tamanyo;
 
-    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_producto")
     private Producto producto;
 }
