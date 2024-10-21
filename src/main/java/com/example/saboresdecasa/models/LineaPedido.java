@@ -20,11 +20,11 @@ public class LineaPedido {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_tipo_producto")
     private TipoProducto tipoProducto;
 
-    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pedido")
     private Pedido pedido;
 }

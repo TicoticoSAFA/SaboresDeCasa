@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name="pedido", schema = "sabores_de_casa", catalog = "postgres")
@@ -28,7 +26,11 @@ public class Pedido {
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_mesa")
     private Mesa mesa;
+
+    @ManyToOne (cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
 }

@@ -1,6 +1,7 @@
 package com.example.saboresdecasa.controladores;
 
 import com.example.saboresdecasa.dto.TipoProductoDTO;
+import com.example.saboresdecasa.enumerates.TipoTipoProducto;
 import com.example.saboresdecasa.models.TipoProducto;
 import com.example.saboresdecasa.servicios.TipoProductoService;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,11 @@ public class TipoProductoControler {
     @GetMapping()
     public TipoProducto getByIdTipoProducto(@RequestParam  Integer id){
         return tipoProductoService.getById(id);
+    }
+
+    @GetMapping("/productoformato/{tipoTipoProducto}")
+    public List<TipoProducto> getByIdTipoProducto(@PathVariable String tipoTipoProducto){
+        return tipoProductoService.getAllByTipo(TipoTipoProducto.valueOf(tipoTipoProducto));
     }
 
     @PostMapping("id/{idTipoProducto}/{idProducto}")

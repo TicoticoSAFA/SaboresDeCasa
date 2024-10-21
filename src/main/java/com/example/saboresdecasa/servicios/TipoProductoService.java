@@ -2,6 +2,7 @@ package com.example.saboresdecasa.servicios;
 
 import com.example.saboresdecasa.dto.ProductoDTO;
 import com.example.saboresdecasa.dto.TipoProductoDTO;
+import com.example.saboresdecasa.enumerates.TipoTipoProducto;
 import com.example.saboresdecasa.models.Producto;
 import com.example.saboresdecasa.models.TipoProducto;
 import com.example.saboresdecasa.repositorios.TipoProductoRepository;
@@ -110,5 +111,9 @@ public class TipoProductoService {
      */
     public void eliminar(Integer id){
         tipoProductoRepository.deleteById(id);
+    }
+
+    public List<TipoProducto> getAllByTipo(TipoTipoProducto tipo){
+        return tipoProductoRepository.findAllByTipoEquals(tipo);
     }
 }
