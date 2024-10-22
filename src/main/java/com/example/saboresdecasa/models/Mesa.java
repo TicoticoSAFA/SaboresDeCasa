@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name="mesa", schema = "sabores_de_casa", catalog = "postgres")
 @Getter
 @Setter
-@ToString(exclude = {"clientes", "camarero"})
+@ToString(exclude = {"camarero"})
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -28,10 +28,4 @@ public class Mesa {
     @JoinColumn(name = "id_camarero")
     private Camarero camarero;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinTable(name = "mesa_cliente", schema = "sabores_de_casa",
-            joinColumns = {@JoinColumn(name = "id_mesa", nullable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "id_cliente", nullable = false)}
-    )
-    private Set<Cliente> clientes = new HashSet<>(0);
 }

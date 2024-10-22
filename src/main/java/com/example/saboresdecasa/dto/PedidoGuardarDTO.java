@@ -11,8 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PedidoGuardarDTO {
-    private Double total;
-    private String fecha;
     private Integer idMesa;
-    private List<LineaPedidoPedidoDTO> lineasPedido;
+    private Integer idCliente;
+    private List<LineaPedidoGuardarPedidoDTO> lineasPedido;
 }

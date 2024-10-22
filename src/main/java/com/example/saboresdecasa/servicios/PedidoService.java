@@ -1,8 +1,6 @@
 package com.example.saboresdecasa.servicios;
 
-import com.example.saboresdecasa.dto.LineaPedidoPedidoDTO;
-import com.example.saboresdecasa.dto.PedidoDTO;
-import com.example.saboresdecasa.dto.PedidoGuardarDTO;
+import com.example.saboresdecasa.dto.*;
 import com.example.saboresdecasa.models.*;
 import com.example.saboresdecasa.repositorios.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,44 +49,6 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    public Pedido guardar(PedidoGuardarDTO pedidoGuardarDTO, Integer idPedido, Integer idMesa) {
-        Pedido pedido = pedidoRepository.findById(idPedido).orElse(null);
-        if (pedido == null) {
-            pedido = new Pedido();
-        }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(pedidoGuardarDTO.getFecha(), formatter);
-        pedido.setFecha(date);
-
-        double total = 0.0;
-
-//        for (LineaPedidoPedidoDTO lineaPedido : pedidoGuardarDTO.getLineasPedido()) {
-//
-//            TipoProducto tipoProducto = tipoProductoService.getById(lineaPedido.getIdTipoProducto());
-//
-//            LineaPedido linea = new LineaPedido();
-//            linea.setCantidad(lineaPedido.getCantidad());
-//            linea.setTipoProducto(tipoProducto);
-//            linea.setPedido(pedido);
-//            if (pedido.getId() != null) {
-//                linea.setPedido(pedido);
-//            }
-//            if (linea.getId() != null) {
-//                linea = lineaPedidoService.getById(linea.getId());
-//            } else {
-//                lineaPedidoService.guardar(linea);
-//            }
-//            total += lineaPedido.getCantidad() * tipoProducto.getPrecio();
-//        }
-
-        pedido.setPrecio(total);
-
-        Mesa mesa = mesaService.getById(idMesa);
-        pedido.setMesa(mesa);
-
-        return pedidoRepository.save(pedido);
-    }
-
     /**
      * elimina un pedido
      * @param id
@@ -118,8 +79,31 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    public List<Pedido> getClientes(Integer idCliente){
+    public PedidoClientesDTO getClientes(Integer idCliente){
+        PedidoClientesDTO pedidoClientesDTO = new PedidoClientesDTO();
+
         Cliente cliente = clienteService.getById(idCliente);
-        return pedidoRepository.findAllByClienteEquals(cliente);
+        List<Pedido> pedidos = pedidoRepository.findAllByClienteEquals(cliente);
+
+        List<PedidoDTO> pedidoDTOList = new ArrayList<>();
+
+        for (Pedido pedido : pedidos) {
+            PedidoDTO pedidoDTO = new PedidoDTO();
+            pedidoDTO.setFecha(pedido.getFecha().toString());
+            pedidoDTO.setTotal(pedido.getPrecio());
+
+            MesaPedidoDTO mesaDTO = new MesaPedidoDTO();
+            mesaDTO.setNumero(pedido.getMesa().getNumero());
+
+            pedidoDTO.setMesa(mesaDTO);
+            pedidoDTO.setTotal(pedido.getPrecio());
+
+            pedidoDTOList.add(pedidoDTO);
+        }
+
+        pedidoClientesDTO.setPedidos(pedidoDTOList);
+        pedidoClientesDTO.setTotal(pedidoDTOList.stream().mapToDouble(PedidoDTO::getTotal).sum());
+
+        return pedidoClientesDTO;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.saboresdecasa.controladores;
 
+import com.example.saboresdecasa.dto.PedidoClientesDTO;
+import com.example.saboresdecasa.dto.PedidoDTO;
 import com.example.saboresdecasa.dto.PedidoGuardarDTO;
 import com.example.saboresdecasa.models.LineaPedido;
 import com.example.saboresdecasa.models.Pedido;
@@ -26,9 +28,9 @@ public class PedidoControler {
         return pedidoService.guardar(pedido);
     }
 
-    @PostMapping("/pedido/{idPedido}/{idMesa}")
-    public Pedido save(@RequestBody PedidoGuardarDTO pedidoGuardarDTO, @PathVariable Integer idPedido, @PathVariable Integer idMesa){
-        return pedidoService.guardar(pedidoGuardarDTO, idPedido, idMesa);
+    @GetMapping("/pedidos/clientes/{idCliente}")
+    public PedidoClientesDTO getPedidosByCliente(@PathVariable Integer idCliente){
+        return pedidoService.getClientes(idCliente);
     }
 
 }

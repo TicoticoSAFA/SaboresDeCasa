@@ -2,6 +2,7 @@ package com.example.saboresdecasa.servicios;
 
 import com.example.saboresdecasa.dto.ProductoDTO;
 import com.example.saboresdecasa.dto.TipoProductoDTO;
+import com.example.saboresdecasa.dto.TipoProductoEditarDTO;
 import com.example.saboresdecasa.enumerates.TipoTipoProducto;
 import com.example.saboresdecasa.models.Producto;
 import com.example.saboresdecasa.models.TipoProducto;
@@ -101,6 +102,17 @@ public class TipoProductoService {
 
         Producto producto = productoService.getById(idProducto);
         entity.setProducto(producto);
+
+        return tipoProductoRepository.save(entity);
+    }
+
+    public TipoProducto guardarPrecio(TipoProductoEditarDTO dto){
+
+        TipoProducto entity = tipoProductoRepository.findById(dto.getId()).orElse(null);
+        if (entity == null) {
+            return null;
+        }
+        entity.setPrecio(dto.getPrecio());
 
         return tipoProductoRepository.save(entity);
     }

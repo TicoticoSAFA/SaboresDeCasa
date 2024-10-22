@@ -1,6 +1,7 @@
 package com.example.saboresdecasa.controladores;
 
 import com.example.saboresdecasa.dto.TipoProductoDTO;
+import com.example.saboresdecasa.dto.TipoProductoEditarDTO;
 import com.example.saboresdecasa.enumerates.TipoTipoProducto;
 import com.example.saboresdecasa.models.TipoProducto;
 import com.example.saboresdecasa.servicios.TipoProductoService;
@@ -39,6 +40,11 @@ public class TipoProductoControler {
     @PostMapping("id/{idTipoProducto}")
     public TipoProducto save(@RequestBody TipoProductoDTO tipoProducto, @PathVariable Integer idProducto){
         return tipoProductoService.guardar(tipoProducto, idProducto);
+    }
+
+    @GetMapping("producto/formato")
+    public TipoProducto editarPrecio(@RequestBody TipoProductoEditarDTO tipoProducto){
+        return tipoProductoService.guardarPrecio(tipoProducto);
     }
 
     @DeleteMapping()
