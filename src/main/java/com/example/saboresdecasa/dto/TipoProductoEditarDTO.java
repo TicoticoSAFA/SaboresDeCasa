@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TipoProductoEditarDTO {
-    private Integer id;
+    private Integer idProducto;
+    private String tipo;
     private Double precio;
 }

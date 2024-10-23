@@ -43,7 +43,7 @@ public class TipoProductoControler {
     }
 
     @GetMapping("producto/formato")
-    public TipoProducto editarPrecio(@RequestBody TipoProductoEditarDTO tipoProducto){
+    public TipoProducto modificarPrecioFormato(@RequestBody TipoProductoEditarDTO tipoProducto){
         return tipoProductoService.guardarPrecio(tipoProducto);
     }
 

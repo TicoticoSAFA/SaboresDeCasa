@@ -107,11 +107,21 @@ public class TipoProductoService {
     }
 
     public TipoProducto guardarPrecio(TipoProductoEditarDTO dto){
+        TipoProducto entity = new TipoProducto();
 
-        TipoProducto entity = tipoProductoRepository.findById(dto.getId()).orElse(null);
-        if (entity == null) {
+        List<TipoProducto> tipoProductosTipo = tipoProductoRepository.findAllByTipoEquals(TipoTipoProducto.valueOf(dto.getTipo()));
+
+        if (tipoProductosTipo == null) {
             return null;
         }
+
+        for (TipoProducto tipoProducto : tipoProductosTipo) {
+            if (tipoProducto.getProducto().getId().equals(dto.getIdProducto())) {
+                entity = tipoProducto;
+                break;
+            }
+        }
+
         entity.setPrecio(dto.getPrecio());
 
         return tipoProductoRepository.save(entity);
