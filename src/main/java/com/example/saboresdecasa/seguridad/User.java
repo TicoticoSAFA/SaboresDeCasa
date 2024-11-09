@@ -39,7 +39,8 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
     private Role role;
 
     @java.lang.Override
