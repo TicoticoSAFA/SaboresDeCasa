@@ -37,12 +37,12 @@ public class CamareroControler {
     }
 
     @GetMapping()
-    public Camarero getByIdCamarero(@RequestParam Integer id){
+    public Camarero getByIdCamarero(@RequestParam Integer id) throws Exception {
         return camareroService.getById(id);
     }
 
     @GetMapping("/get/{id}")
-    public Camarero getByIdPath (@PathVariable Integer id){
+    public Camarero getByIdPath (@PathVariable Integer id) throws Exception {
         return camareroService.getById(id);
     }
 

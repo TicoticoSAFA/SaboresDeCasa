@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="mesa", schema = "sabores_de_casa", catalog = "postgres")
+@Table(name="mesa", schema = "sabores_de_casa")
 @Getter
 @Setter
 @ToString(exclude = {"camarero"})

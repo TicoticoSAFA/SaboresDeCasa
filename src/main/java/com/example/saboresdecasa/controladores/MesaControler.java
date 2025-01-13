@@ -27,12 +27,12 @@ public class MesaControler {
     }
 
     @PostMapping("id/{idMesa}/{idCamarero}")
-    public Mesa save(@RequestBody MesaSaveDTO mesa, @PathVariable Integer idMesa, @PathVariable Integer idCamarero){
+    public Mesa save(@RequestBody MesaSaveDTO mesa, @PathVariable Integer idMesa, @PathVariable Integer idCamarero) throws Exception {
         return mesaService.guardar(mesa, idMesa, idCamarero);
     }
 
     @PostMapping("id/{idCamarero}")
-    public Mesa save(@RequestBody MesaSaveDTO mesa, @PathVariable Integer idCamarero){
+    public Mesa save(@RequestBody MesaSaveDTO mesa, @PathVariable Integer idCamarero) throws Exception {
         return mesaService.guardar(mesa, idCamarero);
     }
 

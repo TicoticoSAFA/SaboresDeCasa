@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="pedido", schema = "sabores_de_casa", catalog = "postgres")
+@Table(name="pedido", schema = "sabores_de_casa")
 @Getter
 @Setter
 @ToString(exclude = {"mesa"})

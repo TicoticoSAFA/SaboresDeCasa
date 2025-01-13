@@ -74,7 +74,7 @@ public class MesaService {
      * @param dto
      * @return
      */
-    public Mesa guardar(MesaSaveDTO dto, Integer idMesa, Integer idCamarero) {
+    public Mesa guardar(MesaSaveDTO dto, Integer idMesa, Integer idCamarero) throws Exception {
         Mesa mesa = mesaRepository.findById(idMesa).orElse(null);
         if (mesa == null) {
             mesa = new Mesa();
@@ -85,7 +85,7 @@ public class MesaService {
         return mesaRepository.save(mesa);
     }
 
-    public Mesa guardar(MesaSaveDTO dto, Integer idCamarero) {
+    public Mesa guardar(MesaSaveDTO dto, Integer idCamarero) throws Exception {
         Mesa mesa = new Mesa();
         mesa.setNumero(dto.getNumero());
         Camarero camarero = camareroService.getById(idCamarero);

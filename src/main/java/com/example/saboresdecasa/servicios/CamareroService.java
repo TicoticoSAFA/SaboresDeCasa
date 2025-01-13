@@ -32,8 +32,13 @@ public class CamareroService {
      * @param id
      * @return
      */
-    public Camarero getById(Integer id) {
-        return camareroRepository.findById(id).orElse(null);
+    public Camarero getById(Integer id) throws Exception {
+        Camarero camarero = camareroRepository.findById(id).orElse(null);
+        if (camarero == null) {
+            throw new Exception("No existe ningún camarero con el id indicado");
+        } else {
+            return camarero;
+        }
     }
 
     /**
@@ -53,7 +58,20 @@ public class CamareroService {
      * @return
      */
     public Camarero guardar(Camarero camarero) {
-        return camareroRepository.save(camarero);
+        try {
+            if (camarero.getNombre().isBlank()) {
+                throw new Exception("El nombre debe estar relleno");
+            } else if (camarero.getApellidos().isBlank()) {
+                throw new Exception("Los apellidos deben estar rellenos");
+            } else if (camarero.getDni().isBlank()) {
+                throw new Exception("El dni debe estar relleno");
+            } else if (camarero.getEmail().isBlank()) {
+                throw new Exception("El email debe estar relleno");
+            }
+            return camareroRepository.save(camarero);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
