@@ -52,7 +52,7 @@ public class CamareroControler {
     }
 
     @DeleteMapping()
-    public String delete(@RequestParam Integer id){
+    public String delete(@RequestParam Integer id) throws Exception {
         return camareroService.eliminar(id);
     }
 

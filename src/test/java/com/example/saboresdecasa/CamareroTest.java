@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -95,7 +94,7 @@ public class CamareroTest {
     }
 
     @Test
-    void eliminarCamarero() {
+    void eliminarCamarero() throws Exception {
         camareroService.eliminar(1);
         Exception exception = assertThrows(Exception.class, () -> {
             Camarero camarero = camareroService.getById(1);

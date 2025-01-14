@@ -79,13 +79,12 @@ public class CamareroService {
      *
      * @param id
      */
-    public String eliminar(Integer id) {
-        Camarero camarero = camareroRepository.getById(id);
+    public String eliminar(Integer id) throws Exception {
         try {
             camareroRepository.deleteById(id);
-            return "se ha eliminado el pedido";
+           return "Se ha eliminado el camarero";
         }catch (Exception e){
-            return "No se ha eliminado el perfil";
+            throw new Exception("No existe ningún camarero con el id indicado");
         }
     }
 
