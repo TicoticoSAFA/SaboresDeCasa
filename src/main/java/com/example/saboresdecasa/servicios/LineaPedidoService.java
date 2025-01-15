@@ -3,6 +3,7 @@ package com.example.saboresdecasa.servicios;
 import com.example.saboresdecasa.dto.*;
 import com.example.saboresdecasa.models.*;
 import com.example.saboresdecasa.repositorios.LineaPedidoRepository;
+import com.example.saboresdecasa.repositorios.PedidoRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class LineaPedidoService {
     private final ClienteService clienteService;
     private final MesaService mesaService;
     private final TipoProductoService tipoProductoService;
+    private final PedidoRepository pedidoRepository;
     private LineaPedidoRepository lineaPedidoRepository;
 
     /**
@@ -73,6 +75,7 @@ public class LineaPedidoService {
 
     /**
      * crear o modificar una linea de pedido
+     *
      * @param pedidoGuardarDTO
      * @return
      */
@@ -90,6 +93,10 @@ public class LineaPedidoService {
         List<LineaPedidoGuardarPedidoDTO> lineasPedido = pedidoGuardarDTO.getLineasPedido();
         List<LineaPedido> lineasPedido1 = new ArrayList<>();
         double precio = 0.0;
+
+        if (lineasPedido == null || lineasPedido.isEmpty()) {
+            return null;
+        }
         for (LineaPedidoGuardarPedidoDTO lineaPedido : lineasPedido) {
             LineaPedido lineaPedido1 = new LineaPedido();
             lineaPedido1.setCantidad(lineaPedido.getCantidad());
@@ -102,11 +109,13 @@ public class LineaPedidoService {
 
         pedido.setPrecio(precio);
 
+        Pedido pedido1 = pedidoRepository.save(pedido);
+
         for (LineaPedido lineaPedido : lineasPedido1) {
             guardar(lineaPedido);
         }
 
-        return pedidoService.guardar(pedido);
+        return pedido1;
     }
 
     public LineaPedido guardar(LineaPedido lineaPedido) {
@@ -120,31 +129,35 @@ public class LineaPedidoService {
      * @return
      */
     public CuentaDTO getCuenta(Integer idpedido) {
-        Pedido pedido = pedidoService.getById(idpedido);
-        List<LineaPedido> lineaPedidos = lineaPedidoRepository.findByPedido(pedido);
+        try {
+            Pedido pedido = pedidoService.getById(idpedido);
+            List<LineaPedido> lineaPedidos = lineaPedidoRepository.findByPedido(pedido);
 
-        CuentaDTO cuentaDTO = new CuentaDTO();
+            CuentaDTO cuentaDTO = new CuentaDTO();
 
-        PedidoDTO pedidoDTO = new PedidoDTO();
-        pedidoDTO.setFecha(pedido.getFecha().toString());
-        pedidoDTO.setTotal(pedido.getPrecio());
+            PedidoDTO pedidoDTO = new PedidoDTO();
+            pedidoDTO.setFecha(pedido.getFecha().toString());
+            pedidoDTO.setTotal(pedido.getPrecio());
 
-        MesaPedidoDTO mesaDTO = new MesaPedidoDTO();
-        mesaDTO.setNumero(pedido.getMesa().getNumero());
-        pedidoDTO.setMesa(mesaDTO);
+            MesaPedidoDTO mesaDTO = new MesaPedidoDTO();
+            mesaDTO.setNumero(pedido.getMesa().getNumero());
+            pedidoDTO.setMesa(mesaDTO);
 
-        cuentaDTO.setPedido(pedidoDTO);
+            cuentaDTO.setPedido(pedidoDTO);
 
-        List<CuentaLineaPedidoDTO> cuentaLineaPedidoDTOS = new ArrayList<>();
-        for (LineaPedido lineaPedido : lineaPedidos) {
-            CuentaLineaPedidoDTO cuentaLineaPedidoDTO = new CuentaLineaPedidoDTO();
-            cuentaLineaPedidoDTO.setId(lineaPedido.getId());
-            cuentaLineaPedidoDTO.setCantidad(lineaPedido.getCantidad());
-            cuentaLineaPedidoDTO.setTipoProducto(lineaPedido.getTipoProducto());
-            cuentaLineaPedidoDTOS.add(cuentaLineaPedidoDTO);
+            List<CuentaLineaPedidoDTO> cuentaLineaPedidoDTOS = new ArrayList<>();
+            for (LineaPedido lineaPedido : lineaPedidos) {
+                CuentaLineaPedidoDTO cuentaLineaPedidoDTO = new CuentaLineaPedidoDTO();
+                cuentaLineaPedidoDTO.setId(lineaPedido.getId());
+                cuentaLineaPedidoDTO.setCantidad(lineaPedido.getCantidad());
+                cuentaLineaPedidoDTO.setTipoProducto(lineaPedido.getTipoProducto());
+                cuentaLineaPedidoDTOS.add(cuentaLineaPedidoDTO);
+            }
+            cuentaDTO.setLineas(cuentaLineaPedidoDTOS);
+            return cuentaDTO;
+        } catch (Exception e) {
+            return null;
         }
-        cuentaDTO.setLineas(cuentaLineaPedidoDTOS);
 
-        return cuentaDTO;
     }
 }
