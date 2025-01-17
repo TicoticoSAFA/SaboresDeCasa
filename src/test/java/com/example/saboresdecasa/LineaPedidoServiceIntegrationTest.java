@@ -19,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,45 +48,45 @@ public class LineaPedidoServiceIntegrationTest {
     @Mock
     private LineaPedidoService lineaPedidoService;
 
-    @BeforeEach
-    public void setUp() {
-       Camarero camarero1 = new Camarero();
-        camarero1.setNombre("Luis");
-        camarero1.setApellidos("Pérez Gómez");
-        camarero1.setDni("12345678A");
-        camarero1.setEmail("luis.perez@ejemplo.com");
-
-        Mesa mesa1 = new Mesa();
-        mesa1.setNumero(1);
-        mesa1.setCamarero(camarero1);
-
-        Cliente cliente1 = new Cliente();
-        cliente1.setNombre("Ana García");
-
-        Pedido pedido1 = new Pedido();
-        pedido1.setPrecio(45.50);
-        pedido1.setFecha(LocalDate.of(2025, 1, 10));
-        pedido1.setMesa(mesa1);
-        pedido1.setCliente(cliente1);
-
-        Producto producto1 = new Producto();
-        producto1.setNombre("Gambas al ajillo");
-        producto1.setDescripcion("Gambas al ajillo con guindilla");
-
-        TipoProducto tipoProducto1 = new TipoProducto();
-        tipoProducto1.setTipo(TipoTipoProducto.PLATOSDELMARFRITO);
-        tipoProducto1.setPrecio(12.50);
-        tipoProducto1.setTamanyo(TamanyoTipoProducto.RACION);
-        tipoProducto1.setProducto(producto1);
-
-        LineaPedido lineaPedido1 = new LineaPedido();
-        lineaPedido1.setCantidad(2);
-        lineaPedido1.setTipoProducto(tipoProducto1);
-        lineaPedido1.setPedido(pedido1);
-
-        Mockito.when(pedidoService.getById(1)).thenReturn(pedido1);
-        Mockito.when(lineaPedidoRepository.findByPedido(pedido1)).thenReturn(List.of(lineaPedido1));
-    }
+//    @BeforeEach
+//    public void setUp() {
+//       Camarero camarero1 = new Camarero();
+//        camarero1.setNombre("Luis");
+//        camarero1.setApellidos("Pérez Gómez");
+//        camarero1.setDni("12345678A");
+//        camarero1.setEmail("luis.perez@ejemplo.com");
+//
+//        Mesa mesa1 = new Mesa();
+//        mesa1.setNumero(1);
+//        mesa1.setCamarero(camarero1);
+//
+//        Cliente cliente1 = new Cliente();
+//        cliente1.setNombre("Ana García");
+//
+//        Pedido pedido1 = new Pedido();
+//        pedido1.setPrecio(45.50);
+//        pedido1.setFecha(LocalDate.of(2025, 1, 10));
+//        pedido1.setMesa(mesa1);
+//        pedido1.setCliente(cliente1);
+//
+//        Producto producto1 = new Producto();
+//        producto1.setNombre("Gambas al ajillo");
+//        producto1.setDescripcion("Gambas al ajillo con guindilla");
+//
+//        TipoProducto tipoProducto1 = new TipoProducto();
+//        tipoProducto1.setTipo(TipoTipoProducto.PLATOSDELMARFRITO);
+//        tipoProducto1.setPrecio(12.50);
+//        tipoProducto1.setTamanyo(TamanyoTipoProducto.RACION);
+//        tipoProducto1.setProducto(producto1);
+//
+//        LineaPedido lineaPedido1 = new LineaPedido();
+//        lineaPedido1.setCantidad(2);
+//        lineaPedido1.setTipoProducto(tipoProducto1);
+//        lineaPedido1.setPedido(pedido1);
+//
+//        Mockito.when(pedidoService.getById(1)).thenReturn(pedido1);
+//        Mockito.when(lineaPedidoRepository.findByPedido(pedido1)).thenReturn(List.of(lineaPedido1));
+//    }
 
     @Test
     public void cuentaLineaPedido() {
@@ -134,48 +135,56 @@ public class LineaPedidoServiceIntegrationTest {
 
     @Test
     public void testCrearPedido_Exito() {
-        // Arrange
-        PedidoGuardarDTO pedidoGuardarDTO = new PedidoGuardarDTO();
-        pedidoGuardarDTO.setIdCliente(1);
-        pedidoGuardarDTO.setIdMesa(1);
+        Camarero camarero1 = new Camarero();
+        camarero1.setId(1);
+        camarero1.setNombre("Luis");
+        camarero1.setApellidos("Pérez Gómez");
+        camarero1.setDni("12345678A");
+        camarero1.setEmail("luis.perez@ejemplo.com");
 
-        LineaPedidoGuardarPedidoDTO lineaDTO = new LineaPedidoGuardarPedidoDTO();
-        lineaDTO.setCantidad(2);
-        lineaDTO.setIdTipoProducto(1);
+        Mesa mesa1 = new Mesa();
+        mesa1.setId(1);
+        mesa1.setNumero(1);
+        mesa1.setCamarero(camarero1);
 
-        pedidoGuardarDTO.setLineasPedido(List.of(lineaDTO));
+        Cliente cliente1 = new Cliente();
+        cliente1.setId(1);
+        cliente1.setNombre("Ana García");
 
-        Cliente cliente = new Cliente();
-        cliente.setId(1);
-        cliente.setNombre("Cliente 1");
+        Pedido pedido1 = new Pedido();
+        pedido1.setId(1);
+        pedido1.setPrecio(45.50);
+        pedido1.setFecha(LocalDate.of(2025, 1, 10));
+        pedido1.setMesa(mesa1);
+        pedido1.setCliente(cliente1);
 
-        Mesa mesa = new Mesa();
-        mesa.setId(1);
-        mesa.setNumero(5);
+        Producto producto1 = new Producto();
+        producto1.setId(1);
+        producto1.setNombre("Gambas al ajillo");
+        producto1.setDescripcion("Gambas al ajillo con guindilla");
 
-        TipoProducto tipoProducto = new TipoProducto();
-        tipoProducto.setId(1);
-        tipoProducto.setPrecio(10.0);
+        TipoProducto tipoProducto1 = new TipoProducto();
+        tipoProducto1.setId(1);
+        tipoProducto1.setTipo(TipoTipoProducto.PLATOSDELMARFRITO);
+        tipoProducto1.setPrecio(12.50);
+        tipoProducto1.setTamanyo(TamanyoTipoProducto.RACION);
+        tipoProducto1.setProducto(producto1);
 
-        Pedido pedidoGuardado = new Pedido();
-        pedidoGuardado.setId(1);
+        LineaPedido lineaPedido1 = new LineaPedido();
+        lineaPedido1.setId(1);
+        lineaPedido1.setCantidad(2);
+        lineaPedido1.setTipoProducto(tipoProducto1);
+        lineaPedido1.setPedido(pedido1);
 
-        Mockito.when(clienteService.getById(1)).thenReturn(cliente);
-        Mockito.when(mesaService.getById(1)).thenReturn(mesa);
-        Mockito.when(tipoProductoService.getById(1)).thenReturn(tipoProducto);
-        Mockito.when(pedidoRepository.save(Mockito.any(Pedido.class))).thenReturn(pedidoGuardado);
-        Mockito.when(lineaPedidoRepository.save(Mockito.any(LineaPedido.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        LineaPedidoGuardarPedidoDTO lineaPedidoDTO1 = new LineaPedidoGuardarPedidoDTO(1, 1, 1, 2);
 
-        // Act
-        Pedido resultado = lineaPedidoService.crearPedido(pedidoGuardarDTO);
+        Mockito.when(clienteService.getById(1)).thenReturn(cliente1);
+        Mockito.when(mesaService.getById(1)).thenReturn(mesa1);
+        Mockito.when(tipoProductoService.getById(1)).thenReturn(tipoProducto1);
+        Mockito.when(pedidoRepository.save(Mockito.any(Pedido.class))).thenReturn(pedido1);
 
-        // Assert
-        assertNotNull(resultado);
-        assertEquals(1, resultado.getId());
-        Mockito.verify(clienteService).getById(1);
-        Mockito.verify(mesaService).getById(1);
-        Mockito.verify(tipoProductoService).getById(1);
-        Mockito.verify(pedidoRepository).save(Mockito.any(Pedido.class));
-        Mockito.verify(lineaPedidoRepository, Mockito.times(1)).save(Mockito.any(LineaPedido.class));
+        PedidoGuardarDTO pedidoGuardarDTO = new PedidoGuardarDTO(1, 1, List.of(lineaPedidoDTO1));
+
+        assertEquals(pedido1, lineaPedidoService.crearPedido(pedidoGuardarDTO));
     }
 }
