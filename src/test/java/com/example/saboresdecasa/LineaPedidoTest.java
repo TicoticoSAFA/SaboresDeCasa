@@ -223,14 +223,43 @@ public class LineaPedidoTest {
 
     @Test
     void guardarLineaPedido() {
-        LineaPedido lineaPedido = new LineaPedido();
-        lineaPedido.setCantidad(4);
-        lineaPedido.setTipoProducto(new TipoProducto());
-        lineaPedido.setPedido(new Pedido());
+        Camarero camarero4 = new Camarero();
+        camarero4.setNombre("Sofía");
+        camarero4.setApellidos("González Pérez");
+        camarero4.setDni("33445566D");
+        camarero4.setEmail("sofia.gonzalez@ejemplo.com");
 
-        LineaPedido lineaPedidoGuardada = lineaPedidoService.guardar(lineaPedido);
+        Mesa mesa4 = new Mesa();
+        mesa4.setNumero(3);
+        mesa4.setCamarero(camarero4);
+
+        Cliente cliente4 = new Cliente();
+        cliente4.setNombre("Miguel Torres");
+
+        Pedido pedido4 = new Pedido();
+        pedido4.setPrecio(28.00);
+        pedido4.setFecha(LocalDate.of(2025, 1, 15));
+        pedido4.setMesa(mesa4);
+        pedido4.setCliente(cliente4);
+
+        Producto producto4 = new Producto();
+        producto4.setNombre("Ensalada César");
+        producto4.setDescripcion("Ensalada César con pollo y aderezo especial");
+
+        TipoProducto tipoProducto4 = new TipoProducto();
+        tipoProducto4.setTipo(TipoTipoProducto.POSTRES);
+        tipoProducto4.setPrecio(8.00);
+        tipoProducto4.setTamanyo(TamanyoTipoProducto.RACION);
+        tipoProducto4.setProducto(producto4);
+
+        LineaPedido lineaPedido4 = new LineaPedido();
+        lineaPedido4.setCantidad(1);
+        lineaPedido4.setTipoProducto(tipoProducto4);
+        lineaPedido4.setPedido(pedido4);
+
+        LineaPedido lineaPedidoGuardada = lineaPedidoService.guardar(lineaPedido4);
 
         assertNotNull(lineaPedidoGuardada);
-        assertEquals(4, lineaPedidoGuardada.getCantidad());
+        assertEquals(1, lineaPedidoGuardada.getCantidad());
     }
 }
