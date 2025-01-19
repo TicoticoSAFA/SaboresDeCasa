@@ -107,7 +107,6 @@ public class TipoProductoService {
     }
 
     public TipoProducto guardarPrecio(TipoProductoEditarDTO dto){
-        TipoProducto entity = new TipoProducto();
 
         List<TipoProducto> tipoProductosTipo = tipoProductoRepository.findAllByTipoEquals(TipoTipoProducto.valueOf(dto.getTipo()));
 
@@ -115,11 +114,13 @@ public class TipoProductoService {
             return null;
         }
 
-        for (TipoProducto tipoProducto : tipoProductosTipo) {
-            if (tipoProducto.getProducto().getId().equals(dto.getIdProducto())) {
-                entity = tipoProducto;
-                break;
-            }
+        TipoProducto entity = tipoProductosTipo.stream()
+            .filter(tipoProducto -> tipoProducto.getProducto().getId().equals(dto.getIdProducto()))
+            .findFirst()
+            .orElse(null);
+
+        if (entity == null) {
+            return null;
         }
 
         entity.setPrecio(dto.getPrecio());

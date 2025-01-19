@@ -25,14 +25,16 @@ public class PedidoService {
 
     /**
      * devuelve todos los pedidos
+     *
      * @return
      */
-    public List<Pedido> getAll(){
+    public List<Pedido> getAll() {
         return pedidoRepository.findAll();
     }
 
     /**
      * busca un pedido por id
+     *
      * @param id
      * @return
      */
@@ -42,6 +44,7 @@ public class PedidoService {
 
     /**
      * crea o modifica un pedido
+     *
      * @param pedido
      * @return
      */
@@ -51,6 +54,7 @@ public class PedidoService {
 
     /**
      * elimina un pedido
+     *
      * @param id
      */
     public void eliminar(Integer id) {
@@ -59,6 +63,7 @@ public class PedidoService {
 
     /**
      * guarda un pedido con formato de dto
+     *
      * @param pedidoDTO
      * @param idPedido
      * @return
@@ -79,31 +84,36 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    public PedidoClientesDTO getClientes(Integer idCliente){
-        PedidoClientesDTO pedidoClientesDTO = new PedidoClientesDTO();
+    public PedidoClientesDTO getClientes(Integer idCliente) {
+        try {
 
-        Cliente cliente = clienteService.getById(idCliente);
-        List<Pedido> pedidos = pedidoRepository.findAllByClienteEquals(cliente);
+            PedidoClientesDTO pedidoClientesDTO = new PedidoClientesDTO();
 
-        List<PedidoDTO> pedidoDTOList = new ArrayList<>();
+            Cliente cliente = clienteService.getById(idCliente);
+            List<Pedido> pedidos = pedidoRepository.findAllByClienteEquals(cliente);
 
-        for (Pedido pedido : pedidos) {
-            PedidoDTO pedidoDTO = new PedidoDTO();
-            pedidoDTO.setFecha(pedido.getFecha().toString());
-            pedidoDTO.setTotal(pedido.getPrecio());
+            List<PedidoDTO> pedidoDTOList = new ArrayList<>();
 
-            MesaPedidoDTO mesaDTO = new MesaPedidoDTO();
-            mesaDTO.setNumero(pedido.getMesa().getNumero());
+            for (Pedido pedido : pedidos) {
+                PedidoDTO pedidoDTO = new PedidoDTO();
+                pedidoDTO.setFecha(pedido.getFecha().toString());
+                pedidoDTO.setTotal(pedido.getPrecio());
 
-            pedidoDTO.setMesa(mesaDTO);
-            pedidoDTO.setTotal(pedido.getPrecio());
+                MesaPedidoDTO mesaDTO = new MesaPedidoDTO();
+                mesaDTO.setNumero(pedido.getMesa().getNumero());
 
-            pedidoDTOList.add(pedidoDTO);
+                pedidoDTO.setMesa(mesaDTO);
+                pedidoDTO.setTotal(pedido.getPrecio());
+
+                pedidoDTOList.add(pedidoDTO);
+            }
+
+            pedidoClientesDTO.setPedidos(pedidoDTOList);
+            pedidoClientesDTO.setTotal(pedidoDTOList.stream().mapToDouble(PedidoDTO::getTotal).sum());
+
+            return pedidoClientesDTO;
+        } catch (Exception e) {
+            return null;
         }
-
-        pedidoClientesDTO.setPedidos(pedidoDTOList);
-        pedidoClientesDTO.setTotal(pedidoDTOList.stream().mapToDouble(PedidoDTO::getTotal).sum());
-
-        return pedidoClientesDTO;
     }
 }

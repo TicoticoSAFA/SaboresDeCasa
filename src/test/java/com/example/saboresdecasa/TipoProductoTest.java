@@ -1,6 +1,7 @@
 package com.example.saboresdecasa;
 
 import com.example.saboresdecasa.dto.TipoProductoDTO;
+import com.example.saboresdecasa.dto.TipoProductoEditarDTO;
 import com.example.saboresdecasa.enumerates.TamanyoTipoProducto;
 import com.example.saboresdecasa.enumerates.TipoTipoProducto;
 import com.example.saboresdecasa.models.Producto;
@@ -110,5 +111,27 @@ public class TipoProductoTest {
         List<TipoProducto> tipoProductos = tipoProductoService.getAllByTipo(TipoTipoProducto.MONTADITOS);
         assertEquals(1, tipoProductos.size());
         assertFalse(tipoProductos.isEmpty());
+    }
+
+    @Test
+    void guardarPrecio() {
+        TipoProductoEditarDTO tipoProductoEditarDTO = new TipoProductoEditarDTO();
+        tipoProductoEditarDTO.setIdProducto(1);
+        tipoProductoEditarDTO.setPrecio(4.00);
+        tipoProductoEditarDTO.setTipo("MONTADITOS");
+
+        TipoProducto tipoProducto = tipoProductoService.guardarPrecio(tipoProductoEditarDTO);
+        assertEquals(4.00, tipoProducto.getPrecio());
+    }
+
+    @Test
+    void guardarPrecioNoExiste() {
+        TipoProductoEditarDTO tipoProductoEditarDTO = new TipoProductoEditarDTO();
+        tipoProductoEditarDTO.setIdProducto(1);
+        tipoProductoEditarDTO.setPrecio(4.00);
+        tipoProductoEditarDTO.setTipo("REFESCOS");
+
+        TipoProducto tipoProducto = tipoProductoService.guardarPrecio(tipoProductoEditarDTO);
+        assertNull(tipoProducto);
     }
 }

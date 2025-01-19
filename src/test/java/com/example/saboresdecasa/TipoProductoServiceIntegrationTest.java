@@ -1,5 +1,6 @@
 package com.example.saboresdecasa;
 
+import com.example.saboresdecasa.dto.TipoProductoEditarDTO;
 import com.example.saboresdecasa.enumerates.TamanyoTipoProducto;
 import com.example.saboresdecasa.enumerates.TipoTipoProducto;
 import com.example.saboresdecasa.models.Producto;
@@ -106,5 +107,31 @@ public class TipoProductoServiceIntegrationTest {
 
         assertEquals(1, tipoProductoService.getAllByTipo(TipoTipoProducto.MONTADITOS).size());
         Mockito.verify(tipoProductoRepository, Mockito.times(1)).findAllByTipoEquals(TipoTipoProducto.MONTADITOS);
+    }
+
+    @Test
+    public void guardarPrecio(){
+        Producto producto1 = new Producto();
+        producto1.setId(1);
+        producto1.setNombre("Montadito de jamón ibérico");
+        producto1.setDescripcion("Montadito elaborado con pan crujiente y jamón ibérico de bellota.");
+
+        TipoProducto tipoProducto1 = new TipoProducto();
+        tipoProducto1.setId(1);
+        tipoProducto1.setTipo(TipoTipoProducto.MONTADITOS);
+        tipoProducto1.setPrecio(3.50);
+        tipoProducto1.setTamanyo(TamanyoTipoProducto.UNIDAD);
+        tipoProducto1.setProducto(producto1);
+
+        TipoProductoEditarDTO tipoProductoEditarDTO = new TipoProductoEditarDTO();
+        tipoProductoEditarDTO.setIdProducto(1);
+        tipoProductoEditarDTO.setTipo(TipoTipoProducto.MONTADITOS.toString());
+        tipoProductoEditarDTO.setPrecio(150.0);
+
+        Mockito.when(tipoProductoRepository.save(tipoProducto1)).thenReturn(tipoProducto1);
+        Mockito.when(tipoProductoRepository.findAllByTipoEquals(TipoTipoProducto.MONTADITOS)).thenReturn(List.of(tipoProducto1));
+        Mockito.when(tipoProductoService.guardarPrecio(tipoProductoEditarDTO)).thenReturn(tipoProducto1);
+
+        assertEquals(tipoProducto1, tipoProductoService.guardarPrecio(tipoProductoEditarDTO));
     }
 }
